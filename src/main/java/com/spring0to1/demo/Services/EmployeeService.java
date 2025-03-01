@@ -6,6 +6,7 @@ import com.spring0to1.demo.Repository.EmployeeRepository;
 import com.spring0to1.demo.dto.EmployeeDTO;
 import com.spring0to1.demo.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
@@ -26,6 +27,7 @@ public class EmployeeService {
     }
 
 
+    @Cacheable(cacheNames = "Employees", key="#id")
     public Optional<EmployeeDTO> getEmployeeById(Long id) {
 //        Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(id);
 //        return employeeEntity.map(employeeEntity1 -> modelMapper.map(employeeEntity1, EmployeeDTO.class));
