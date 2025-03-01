@@ -7,17 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentDTO {
+public class DepartmentDTO  implements Serializable {
     private Long id;
     private String title;
     @JsonProperty("isActive")
     private boolean isActive;
-    private LocalDateTime createdAt;
 
     @DepartmentEmailValidation
     private String departmentEmail;

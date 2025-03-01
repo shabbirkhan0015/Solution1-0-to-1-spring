@@ -8,11 +8,13 @@ import com.spring0to1.demo.dto.EmployeeDTO;
 import com.spring0to1.demo.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +34,13 @@ public class DepartmentService {
         if(!exists) throw new ResourceNotFoundException("Department not found with id: "+departmentId);
     }
 
+    @Cacheable(cacheNames = "Departments", key="#id")
+    public Optional<DepartmentDTO> getDepartmentId(Long id) {
+//        Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(id);
+//        return employeeEntity.map(employeeEntity1 -> modelMapper.map(employeeEntity1, EmployeeDTO.class));
+
+        return departmentRepository.findById(id).map(departmentEntity -> modelMapper.map(departmentEntity, DepartmentDTO.class));
+    }
 
     public ResponseEntity<Department> createDepartment(DepartmentDTO departmentDTO)
     {
